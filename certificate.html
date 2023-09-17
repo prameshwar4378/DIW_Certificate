@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <!-- Include HTML2Canvas script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 210mm; /* Set width to A4 width */
+            height: 297mm; /* Set height to A4 height */
+            margin: 0cm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background-image: url("Certificale.jpg");
+            background-size: 100% 100%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @page {
+            size: 210mm 297mm; /* Set page size to A4 */
+            margin: 0;
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                page-break-after: always;
+            }
+        }
+
+        .download-btn {
+            background: green;
+            padding: 5px;
+            border-radius: 10px;
+            width: 200px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .certificate_content span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body> 
+    <div class="book">
+        <div class="page">
+            <div class="subpage">
+                <p style="position: absolute; top: 250px; margin-left:40px; ">
+                    Certificate Number : <span id="cer_number"></span>
+                </p>
+                <p style="position: absolute; top: 250px; margin-left:600px;">
+                    Date : <span id="cer_date"></span>
+                </p>
+                <p style="position: absolute; top: 450px;  width:700px; margin-left:40px; text-align:justify;">
+                    This is to certify that <b> M/s <span id="name"></span></b>, student of <span id="college"></span> has 
+                    successfully Completed <b>“Internship”</b> In the field of <b><span id="designation"></span></b>
+                    from  <b><span id="start_date"></span></b> to <b><span id="end_date"></span></b>.
+                    <br><br>
+                    During the period of <span id="gender_grammar">her</span> internship programme with us, <span id="gender_grammar1">he</span> had been exposed to 
+                    different processes and was found diligent, hardworking and inquisitive. 
+<br><br>
+                    We wish <span id="gender_grammar2"></span> very success in <span id="gender_grammar3"></span> life and career.
+                </p>
+
+                
+                <p style="position: absolute; top: 850px; margin-left:40px;">
+                    Place : <b>Pune</b><br>
+                    Date : <b><span id="cer_date1"></span></b>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Function to format a date as "dd-mm-yyyy"
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-based
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+
+// Function to get query parameters from the URL
+function getQueryParameters() {
+    const query = window.location.search.substring(1);
+    const pairs = query.split('&');
+    const params = {};
+    for (const pair of pairs) {
+        const [key, value] = pair.split('=');
+        params[key] = decodeURIComponent(value);
+    }
+    return params;
+}
+
+// Get query parameters
+const queryParams = getQueryParameters();
+
+// Access the data sent from the first page
+const certificateNumber = queryParams.certificateNumber;
+const certificateDate = queryParams.certificateDate;
+const empName = queryParams.empName;
+const empGender = queryParams.empGender;
+const startDate = queryParams.startDate;
+const endDate = queryParams.endDate;
+const empDesignation = queryParams.empDesignation;
+
+const cer_numberElement = document.getElementById('cer_number');
+cer_numberElement.textContent = certificateNumber;
+
+const cer_dateElement = document.getElementById('cer_date');
+cer_dateElement.textContent = formatDate(certificateDate); // Format the date
+
+const cer_dateElement1 = document.getElementById('cer_date1');
+cer_dateElement1.textContent = formatDate(certificateDate); // Format the date
+
+const emp_name = document.getElementById('name');
+emp_name.textContent = empName;
+
+const collegeElement = document.getElementById('college');
+collegeElement.textContent = queryParams.College;
+
+const emp_designationElement = document.getElementById('designation');
+emp_designationElement.textContent = empDesignation;
+
+const start_dateElement = document.getElementById('start_date');
+start_dateElement.textContent = formatDate(startDate); // Format the date
+
+const end_dateElement = document.getElementById('end_date');
+end_dateElement.textContent = formatDate(endDate); // Format the date
+// ... access other query parameters as needed
+
+// Use the data as needed in your page
+
+if (empGender === "Male") {
+  const gender_grammar = document.getElementById('gender_grammar');
+  gender_grammar.textContent = "him"; // Format the date
+  const gender_grammar2 = document.getElementById('gender_grammar2');
+  gender_grammar2.textContent = "him"; // Format the date
+  const gender_grammar3 = document.getElementById('gender_grammar3');
+  gender_grammar3.textContent = "his"; // Format the date
+
+  const gender_grammar1 = document.getElementById('gender_grammar1');
+  gender_grammar1.textContent = "he"; // Format the date
+} else {
+  const gender_grammar = document.getElementById('gender_grammar');
+  gender_grammar.textContent = "her"; // Format the date
+
+  const gender_grammar2 = document.getElementById('gender_grammar2');
+  gender_grammar2.textContent = "her"; // Format the date
+  const gender_grammar3 = document.getElementById('gender_grammar3');
+  gender_grammar3.textContent = "her"; // Format the date
+
+  const gender_grammar1 = document.getElementById('gender_grammar1');
+  gender_grammar1.textContent = "she"; // Format the date
+}
+
+    </script>
+    
+</body>
+</html>
